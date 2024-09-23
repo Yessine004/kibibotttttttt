@@ -4,605 +4,277 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>kibibot</title>
-
-    <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="/assets/logo/kibibot_k.svg">
-
-    <!-- Google Fonts Import -->
     <link href="https://fonts.googleapis.com/css2?family=SUSE:wght@400;700&display=swap" rel="stylesheet">
-
-    <!-- Font Awesome -->
-    <script src="https://kit.fontawesome.com/72ef189a04.js" crossorigin="anonymous"></script>
+    <link rel="icon" href="https://media.discordapp.net/attachments/1275489255459651772/1286427238354518046/kibibot_k.png?ex=66f27b7a&is=66f129fa&hm=5f2e02d4c97e83b30b6d86272bafae112951eb93200c5ed0a8db06d71c83bcb4&=&format=webp&quality=lossless&width=662&height=662">
     <style>
-        /* Color variables*/
-        :root {
-            --accent-color: #B40000;
-            --background-color: #1d1f22;
-            --secondary-bg-color: #202225;
-            --light-grey: #4f545c;
-            --text-color: #e4e6eb;
-            --secondary-text-color: #99aab5;
-        }
-
-        /* Font Styling */
         body {
             margin: 0;
-            font-family: 'SUSE', sans-serif; /* Apply SUSE font to the body */
-            scroll-behavior: smooth;
-            background-color: var(--background-color);
-            color: var(--text-color);
-            padding-bottom: 60px;
+            font-family: 'SUSE', sans-serif;
+            background-color: #1d1f22;
+            color: #fff;
         }
-
-        a {
-            text-decoration: none;
-            color: inherit;
-        }
-
-        h1, h2, h3, p {
-            margin: 0;
-            padding: 0;
-        }
-
-        /* Navbar Styling */
         .navbar {
+            background-color: #1d1f22;
             display: flex;
-            justify-content: space-between; /* Space between logo and nav links */
-            align-items: center; /* Vertically center items */
-            padding: 20px 40px;
-            background-color: var(--secondary-bg-color);
-            color: var(--text-color);
-            position: fixed;
-            width: 100%;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            height: 80px;
+            border-bottom: 0.5px solid rgba(159, 155, 155, 0.448);
+            position: sticky;
             top: 0;
+            transition: opacity 0.3s;
             z-index: 1000;
-            border-bottom: 2px solid var(--light-grey);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            box-sizing: border-box;
-            transition: opacity 0.3s ease; /* Add transition for opacity */
         }
-
         .navbar.transparent {
-            opacity: 0.7; /* Lower opacity when scrolled */
+            opacity: 0.7;
         }
-
-        .logo {
-            font-size: 1.8em;
-            font-weight: bold;
-            color: var(--text-color);
-        }
-
         .logo img {
-            height: 50px; /* Adjust height as needed */
-            display: block; /* Prevents extra space below the image */
+            height: 60px;
         }
-
-        .nav-links {
-            display: flex; /* Ensures nav links are in a row */
-            list-style: none; /* Remove bullet points */
-            margin: 0;
-            padding: 0;
+        .nav-buttons {
+            display: flex;
+            align-items: center;
         }
-
-        .nav-links li {
-            margin: 0 20px; /* Space between nav items */
-        }
-
-        .nav-links a {
-            color: var(--text-color);
-            font-size: 1.1em;
-            padding: 5px 0;
+        .nav-button {
+            background: none;
+            color: #fff;
+            border: none;
+            padding: 10px 15px;
+            margin-left: 10px;
+            cursor: pointer;
             position: relative;
-            transition: color 0.3s ease, border-bottom 0.3s ease;
         }
-
-        .nav-links a::before {
+        .nav-button::after {
             content: '';
             display: block;
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 3px;
-            background: var(--accent-color);
-            transition: width 0.3s ease;
-        }
-
-        .nav-links a:hover::before {
             width: 100%;
+            height: 2px;
+            background: red;
+            position: absolute;
+            left: 0;
+            bottom: -5px;
+            transform: scaleX(0);
+            transition: transform 0.3s;
         }
-
-        .nav-links a:hover,
-        .nav-links a:focus {
-            color: var(--text-color); /* Ensures the text color returns to normal on hover or focus */
+        .nav-button:hover::after {
+            transform: scaleX(1);
         }
-
         .menu-toggle {
             display: none;
-            flex-direction: column;
+            background: none;
+            color: #fff;
+            border: none;
+            font-size: 24px;
             cursor: pointer;
         }
-
-        .menu-toggle .bar {
-            background: #ffffff;
-            height: 4px;
-            width: 30px;
-            margin: 4px 0;
-            transition: 0.3s;
-        }
-
-        /* Mobile Menu Styling */
         @media (max-width: 768px) {
-            .nav-links {
+            .nav-buttons {
                 display: none;
                 flex-direction: column;
-                width: 100%;
-                background-color: #2f3136;
                 position: absolute;
-                top: 60px;
-                left: 0;
-                padding: 20px 0;
-                box-sizing: border-box;
+                top: 80px;
+                right: 20px;
+                background-color: #1d1f22;
+                padding: 10px;
+                border-radius: 5px;
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
             }
-
-            .nav-links.active {
+            .nav-buttons.active {
                 display: flex;
             }
-
             .menu-toggle {
-                display: flex;
-            }
-
-            .nav-links a {
-                padding: 15px;
-                text-align: center;
-                border-bottom: 1px solid var(--light-grey);
+                display: block;
             }
         }
 
-        /* Section Styling */
-        .section {
+        .hero-section {
             display: flex;
-            justify-content: center;
             align-items: center;
-            padding: 40px 60px;
-            min-height: 100vh;
-            background: var(--background-color);
-            box-sizing: border-box;
-            position: relative;
-            overflow: hidden;
+            justify-content: space-between;
+            padding: 40px 40px 20px;
+            background-color: #1d1f22;
+            height: calc(100vh - 80px);
+            flex-wrap: wrap;
         }
 
-        .text-container {
-            flex: 1;
-            margin-left: 40px;
-            opacity: 0;
-            transform: translateX(50px);
-            animation: fadeInRight 1s forwards;
+        .text-content {
+            margin-right: 20px;
         }
 
-        .photo-container {
-            flex: 1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            opacity: 0;
-            transform: translateX(-50px);
-            animation: fadeInLeft 1s forwards;
+        .image-content {
+            text-align: right;
+            width: 800px;
+            height: 400px;
         }
 
-        .photo-container img {
+        .cta-button {
+            background-color: red;
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+            margin-top: 20px;
+        }
+        .cta-button:hover {
+            background-color: darkred;
+        }
+        img {
             max-width: 100%;
             height: auto;
-            display: block;
-            border-radius: 10px;
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
-            animation: scaleIn 1s forwards;
         }
-
-        /* Specific Styling for #home Section */
-        #home .text-container {
-            margin-left: 20px; /* Reduced margin for closer alignment */
-        }
-
-        #home h1 {
-            font-size: 4em; /* Much larger font size */
-            color: var(--text-color);
-            margin: 0;
-            padding: 0;
-        }
-
-        #home p {
-            font-size: 1.6em; /* Larger font size */
-            color: var(--text-color);
-            margin: 10px 0; /* Reduced margin */
-            padding: 0;
-        }
-
-        #home .btn {
-            display: inline-block;
-            padding: 12px 24px;
-            font-size: 1.1em;
-            color: var(--text-color);
-            background-color: var(--accent-color); /* Red theme background */
-            border: 2px solid var(--accent-color); /* Red border */
-            border-radius: 8px;
-            text-align: center;
-            text-decoration: none;
-            cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-top: 20px; /* Reduced margin */
-        }
-
-        #home .btn:hover {
-            background-color: var(--accent-color); /* Slightly darker red on hover */
-            transform: scale(1.05);
-            color: var(--text-color);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
-        }
-        
-        /* Animations */
-        @keyframes fadeInRight {
-            from {
-                opacity: 0;
-                transform: translateX(50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        @keyframes fadeInLeft {
-            from {
-                opacity: 0;
-                transform: translateX(-50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        @keyframes scaleIn {
-            from {
-                opacity: 0;
-                transform: scale(0.9);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
-
-        @keyframes glowingText {
-            from {
-                text-shadow: 0 0 10px var(--accent-color);
-            }
-            to {
-                text-shadow: 0 0 20px var(--accent-color), 0 0 30px var(--accent-color);
-            }
-        }
-
-        @keyframes moveUp {
-            0% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-15px);
-            }
-            100% {
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes floating {
-            0% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-15px);
-            }
-            100% {
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes bounceIn {
-            0% {
-                opacity: 0;
-                transform: translateY(-1000px);
-            }
-            60% {
-                opacity: 1;
-                transform: translateY(30px);
-            }
-            80% {
-                transform: translateY(-10px);
-            }
-            100% {
-                transform: translateY(0);
-            }
-        }
-
-        /* Features Section */
-        .features-section .text-container {
-            margin-left: 60px;
-        }
-
-        .features-section h3 {
-            font-size: 1.6em;
-            color: var(--secondary-text-color);
-            animation-delay: 0.5s;
-        }
-
-        .features-section h1 {
-            font-size: 2.8em;
-            color: var(--text-color);
-            margin: 10px 0;
-            animation-delay: 0.7s;
-        }
-
-        .features-section p {
-            font-size: 1.1em;
-            color: var(--secondary-text-color);
-            margin: 0 0 20px;
-            animation-delay: 0.9s;
-        }
-
-        /* Button Styling */
-        .btn {
-            display: inline-block;
-            padding: 12px 24px;
-            font-size: 1.1em;
-            color: var(--accent-color); /* Red text */
-            background-color: transparent; /* Transparent background */
-            border: 2px solid var(--accent-color); /* Red border */
-            border-radius: 8px;
-            text-align: center;
-            text-decoration: none;
-            cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-top: 20px; /* Reduced margin */
-        }
-
-        .btn:hover {
-            background-color: var(--accent-color); /* Slightly darker red on hover */
-            transform: scale(1.05);
-            color: var(--text-color);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
-        }
-
-        /* Specific Button Styling for #home Section */
-        #home .btn {
-            background-color: transparent; /* Transparent background */
-            color: var(--accent-color); /* Red text */
-            border: 2px solid var(--accent-color); /* Red border */
-        }
-
-        #home .btn:hover {
-            background-color: var(--accent-color); /* Red background on hover */
-            color: var(--text-color); /* White text on hover */
-        }
-
-        /* Call to Action Section */
-        .cta-section {
-            background-color: var(--background-color);
-            padding: 40px;
-            text-align: center;
-            color: var(--text-color);
-            border-top: 2px solid var(--light-grey);
-        }
-
-        .cta-section h2 {
-            font-size: 2.8em;
-            margin-bottom: 20px;
-            color: var(--text-color);
-            animation: bounceIn 1s forwards; /* Add bounce animation */
-        }
-
-        .cta-section .btn {
-            background-color: transparent;
-            color: var(--accent-color);
-            border: 2px solid var(--accent-color);
-            padding: 15px 30px;
-            font-size: 1.2em;
-            margin-top: 20px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            border-radius: 8px;
-            animation: pulsingText 2s infinite; /* Apply pulsing animation to text */
-        }
-
-        .cta-section .btn:hover {
-            background-color: var(--accent-color);
-            color: var(--text-color);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
-        }
-
-        /* Footer Styling */
-        #footer {
-            background-color: var(--secondary-bg-color);
-            color: var(--text-color);
-            padding: 20px;
-            text-align: left; /* Align text to the left */
-            position: fixed;
-            width: 100%;
-            bottom: -60px; /* Hide initially */
-            left: 0;
-            transition: bottom 0.5s ease;
-            z-index: 1000;
-            box-sizing: border-box;
+        .features-section, .support-section {
             display: flex;
-            justify-content: space-between;
+            flex-direction: column;
             align-items: center;
+            padding: 20px;
+            background-color: #1d1f22;
+            height: auto;
+        }
+        .features-text, .features-image, .support-text {
+            width: 100%;
+            margin: 20px 0;
+            text-align: center; /* Center text in support section */
         }
 
-        #footer .footer-links {
+        .features-section {
+            height: calc(100vh - 80px); /* Full height for features section */
             display: flex;
-            gap: 20px;
+            align-items: center; /* Center content vertically */
+            justify-content: center; /* Center content horizontally */
         }
 
-        #footer .footer-links a {
-            color: var(--text-color);
-            font-size: 0.9em;
-            transition: color 0.3s ease;
+        .features-text {
+            text-align: left; /* Align text to the left */
+            margin-left: 20px; /* Add some margin for spacing */
         }
 
-        #footer .footer-links a:hover {
-            color: var(--accent-color);
-        }
-
-        @keyframes pulsingText {
-            0% {
-                text-shadow: 0 0 10px var(--accent-color);
+        @media (min-width: 768px) {
+            .features-section {
+                flex-direction: row; /* Align items horizontally */
+                justify-content: space-between; /* Space between items */
             }
-            50% {
-                text-shadow: 0 0 20px var(--accent-color), 0 0 30px var(--accent-color);
+            .features-text, .features-image, .support-text {
+                width: 48%;
+                margin: 0;
             }
-            100% {
-                text-shadow: 0 0 10px var(--accent-color);
+            .features-image {
+                text-align: left; /* Align image to the left */
+            }
+        }
+
+        /* New Support Section Styling */
+        .support-section {
+            height: 100vh; /* Full height for the support section */
+            justify-content: center; /* Center the content */
+            padding: 40px; /* Add padding */
+        }
+
+        /* Text styling for the hero section */
+        h1 {
+            font-size: 3em;
+            font-weight: bold;
+            margin: 0;
+        }
+        h4 {
+            font-size: 1.5em;
+            margin: 0;
+        }
+        p {
+            font-size: 1.2em;
+            margin: 10px 0 0;
+            max-width: 600px; /* Limit width for better wrapping */
+        }
+
+        /* Responsive text sizes */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5em; /* Adjust font size for smaller screens */
+            }
+            p {
+                font-size: 1em; /* Adjust paragraph font size */
+            }
+            .cta-button {
+                padding: 10px 20px; /* Adjust button padding */
+                font-size: 14px; /* Adjust button font size */
             }
         }
     </style>
 </head>
 <body>
-    <nav class="navbar">
-        <a href="#home" class="logo">
-            <img src="/assets/logo/kibibot.svg" alt="kibibot logo" width="100" height="50">
-        </a>        
-        <ul class="nav-links">
-            <li><a href="#features">Features</a></li>
-            <li><a href="#support">Support</a></li>
-        </ul>
-        <div class="menu-toggle" id="menuToggle">
-            <span class="bar"></span>
-            <span class="bar"></span>
-            <span class="bar"></span>
-        </div>
-    </nav>
 
-    <section id="home" class="section first-section">
-        <div class="text-container">
+    <div class="navbar" id="navbar">
+        <a class="logo" href="javascript:void(0)" onclick="scrollToSection('hero')">
+            <img src="https://cdn.discordapp.com/attachments/1275489255459651772/1286427238052397106/kibibot.png?ex=66f27b7a&is=66f129fa&hm=85bda9430f949f18ebcfed61bbb4c534be664db51a0259ce972ee90e00af9f7b&" alt="Logo">
+        </a>
+        <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+        <div class="nav-buttons" id="navButtons">
+            <button class="nav-button" onclick="scrollToSection('features')">Features</button>
+            <button class="nav-button" onclick="scrollToSection('support')">Support</button>
+        </div>
+    </div>
+
+    <div class="hero-section" id="hero">
+        <div class="text-content">
             <h1>Transform Your Guild</h1>
-            <p>Kibibot is a comprehensive discord bot that allows you to launch your very own guildbot on hypixel! Join the growing community that relies on kibi for a smoother and more engaging guild!</p>
-            <a href="https://discord.com/api/oauth2/authorize?client_id=948347324286005298&permissions=268748880&scope=bot%20applications.commands" class="btn" target="_blank">Invite kibi</a>
+            <p>
+                Kibibot is a comprehensive discord bot that allows you to launch your very own guildbot on Hypixel! 
+                Join the growing community that relies on Kibi for a smoother and more engaging guild!
+            </p>
+            <button class="cta-button">Get Started</button>
         </div>
+        <div class="image-content">
+            <img src="https://assets.polsu.xyz/overlay/requeue.png" alt="Placeholder Image">
+        </div>
+    </div>
 
-        <div class="photo-container">
-            <img src="" alt="kibibot overview">
+    <div class="features-section" id="features">
+        <div class="features-image">
+            <img src="https://assets.polsu.xyz/website/stats.png" alt="Features Image">
         </div>
-    </section>
+        <div class="features-text">
+            <h4>Our Amazing Features</h4>
+            <h1>Why Choose Us?</h1>
+            <p>Explore our unique features that set us apart and help you achieve your objectives.</p>
+            <button class="cta-button">Learn More</button>
+        </div>
+    </div>
 
-    <section id="features" class="section features-section">
-        <div class="photo-container">
-            <img src="" alt="kibibot features">
-        </div>
-        <div class="text-container">
-            <h3>Exclusive Features</h3>
-            <h1>No More Hosting Issues!</h1>
-            <p>Launch your guildbot from the comfort of your own discord server! No need to worry about unreliable hosting anymore.</p>
-            <a href="https://discord.com/api/oauth2/authorize?client_id=948347324286005298&permissions=268748880&scope=bot%20applications.commands" class="btn" target="_blank">Invite kibi</a>
-        </div>
-    </section>
-
-    <!-- <section id="status" class="section status-section"></section>
-        <div class="photo-container">
-            <img src="" alt="kibibot features">
-        </div>
-        <div class="text-container">
-            <h1>Comprehensive Stats Viewing</h1>
-            <p>Experience your stats in a new light with Kibi's intuitive commands! Invite kibibot to get your party's stats. Explore our powerful ingame commands and elevate your guild's experience.</p>
-            <a href="https://discord.com/api/oauth2/authorize?client_id=948347324286005298&permissions=268748880&scope=bot%20applications.commands" class="btn" target="_blank">Invite kibi</a>
-        </div>
-    </section> -->
-
-    <!-- <section id="status" class="section status-section">
-        <div class="text-container">
-            <h1>Service Status</h1>
-            <p>Stay informed about kibi's operational status with real-time updates. Our goal is to provide seamless service without interruptions.</p>
-        </div>
-        <div class="photo-container">
-            <img src="" alt="service status">
-        </div>
-    </section> -->
-
-    <section id="support" class="section support-section">
-        <div class="text-container">
+    <div class="support-section" id="support">
+        <div class="support-text">
             <h1>Need Help?</h1>
-            <p>If you encounter any issues or need assistance, our support team is here to help. Join our community and get the support you need.</p>
+            <p>If you have any questions or need support, reach out to our team for assistance.</p>
+            <button class="cta-button">Contact Support</button>
         </div>
-        <div class="photo-container">
-            <img src="" alt="support">
-        </div>
-    </section>
-
-    <section class="cta-section" id="last-section">
-        <h2>Elevate Your Guild's Experience</h2>
-        <a href="https://discord.com/api/oauth2/authorize?client_id=948347324286005298&permissions=268748880&scope=bot%20applications.commands" class="btn" target="_blank">Invite kibi</a>
-    </section>
-
-    
-
-    <footer id="footer">
-        <p>&copy; 2024 kibibot development</p>
-        <div class="footer-links">
-            <a href="/tos">Terms of Service</a>
-            <a href="/privacy">Privacy Policy</a>
-        </div>
-    </footer>
+    </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const menuToggle = document.getElementById('menuToggle');
-            const navLinks = document.querySelector('.nav-links');
-            const footer = document.getElementById('footer');
-            const navbar = document.querySelector('.navbar');
+        function toggleMenu() {
+            const navButtons = document.getElementById('navButtons');
+            navButtons.classList.toggle('active');
+        }
 
-            menuToggle.addEventListener('click', function() {
-                navLinks.classList.toggle('active');
-                menuToggle.classList.toggle('active');
-            });
+        function scrollToSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            section.scrollIntoView({ behavior: 'smooth' });
+        }
 
-            const scrollToSection = (e) => {
-                e.preventDefault();
-                const targetId = e.currentTarget.getAttribute('href').substring(1);
-                const targetSection = document.getElementById(targetId);
-                if (targetSection) {
-                    targetSection.scrollIntoView({ behavior: 'smooth' });
-                }
-            };
+        // Adjust navbar opacity on scroll
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            const featuresSection = document.getElementById('features');
+            const featuresPosition = featuresSection.getBoundingClientRect().top;
 
-            document.querySelectorAll('.nav-links a, .logo').forEach(anchor => {
-                anchor.addEventListener('click', scrollToSection);
-            });
-
-            window.addEventListener('scroll', function() {
-                const featuresSection = document.getElementById('features');
-                const featuresPosition = featuresSection.offsetTop;
-                const scrollPosition = window.scrollY + window.innerHeight;
-
-                if (scrollPosition > featuresPosition) {
-                    navbar.classList.add('transparent');
-                } else {
-                    navbar.classList.remove('transparent');
-                }
-
-                const supportSection = document.getElementById('support');
-                const footerPosition = window.innerHeight + window.scrollY;
-                const supportPosition = supportSection.offsetTop + supportSection.offsetHeight;
-
-                if (footerPosition > supportPosition) {
-                    footer.style.bottom = '0';
-                } else {
-                    footer.style.bottom = '-60px';
-                }
-            });
+            if (featuresPosition <= navbar.clientHeight) {
+                navbar.classList.add('transparent');
+            } else {
+                navbar.classList.remove('transparent');
+            }
         });
     </script>
+
 </body>
 </html>
